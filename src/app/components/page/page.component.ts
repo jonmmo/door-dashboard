@@ -7,15 +7,10 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./page.component.scss']
 })
 export class PageComponent implements OnInit {
-  public bikeStatuses: any = {};
-  constructor(private ds: DataService) { }
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.ds.fetchData();
-    this.ds.getBikeData().subscribe((bikeData: any) => {
-      this.bikeStatuses = bikeData;
-      console.log(this.bikeStatuses);
-    })
   }
 
 }
