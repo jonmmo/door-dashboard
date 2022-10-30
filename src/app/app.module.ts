@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageComponent } from './components/page/page.component';
 import { BikeViewComponent } from './components/bike-view/bike-view.component';
+import { WeatherViewComponent } from './components/weather-view/weather-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageComponent,
-    BikeViewComponent
+    BikeViewComponent,
+    WeatherViewComponent
   ],
   imports: [
     BrowserModule,

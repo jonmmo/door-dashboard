@@ -1,18 +1,28 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { bikeUrl, BJGid, UVid, stHid } from '../const';
+import { bikeUrl, BJGid, UVid, stHid, weatherUrl, lat, lon, alt } from '../const';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   private bikeData: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  private weatherForecast: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  private weatherParams = {
+    "lat": lat,
+    "lon": lon,
+    "altitude": alt
+  };
 
   constructor(private http: HttpClient) { }
 
   getBikeData() {
     return this.bikeData;
+  }
+
+  getWeatherForecast() {
+    return this.weatherForecast;
   }
 
   fetchData() {
@@ -30,6 +40,17 @@ export class DataService {
       });
       this.bikeData.next(data);
     });
+
+    this.http.get('/weather', {params: this.weatherParams}).
+    subscribe((forecast: any) => {
+      console.log(forecast)
+      for (let singleForecast of forecast.properties.timeseries) {
+        if (new Date(singleForecast.time) > new Date()) {
+          this.weatherForecast.next(singleForecast);
+          break;
+        }
+      }
+    })
     
 
   }
